@@ -5,12 +5,14 @@
  */
 package Servlets;
 
+import Clases.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -47,6 +49,35 @@ public class ValidaReg extends HttpServlet {
             throws ServletException, IOException {
         
         Usuario= request.getParameter("User");
+        Passw= request.getParameter("Contra");
+        
+        Conexion cone= new Conexion();
+        
+        if(cone.Con(Usuario, Passw).equals("Oka")){
+            String Rol= cone.Rol(Usuario, Passw);
+            //Rol= "1";
+            
+            HttpSession sesion= request.getSession();
+            sesion.setAttribute("Usuario", Usuario);
+            sesion.setAttribute("contra", Passw);
+            sesion.setAttribute("Rol", Rol);
+            
+            PrintWriter out = response.getWriter();
+            out.println("<html><head></head><body>");
+            out.println("¡Bienvenido!" + Rol +"<br>");
+            out.println("<a href=\"/PracticaBD/Verificar\">Verifica tu Sesion</a>");
+            out.println("<a href=\"/PracticaBD/index.html\"> Volver</a><br>");
+            out.println("<br></body></html>");
+        
+        }
+        else{
+            PrintWriter out = response.getWriter();
+            out.println("<html><head></head><body>");
+            out.println("Cuenta no Valida");
+            out.println("<a href=\"/PracticaBD/index.html\"> Volver</a>");
+            out.println("<br>");
+            out.println("<br></body></html>");
+        }
     }
 
     @Override

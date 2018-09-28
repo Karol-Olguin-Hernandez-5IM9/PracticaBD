@@ -5,6 +5,9 @@
  */
 package Servlets;
 
+import Clases.Conexion;
+import Clases.Rol_1;
+import Clases.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -70,7 +73,40 @@ public class Registro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        Usuario usu= new Usuario();
+        Conexion cone= new Conexion();
+        
+        int Rol=Integer.parseInt(request.getParameter("rol"));
+        String nombre=request.getParameter("Nom");
+        String apellidoPaterno= request.getParameter("Ap");
+        String apellidoMaterno= request.getParameter("Am");
+        String telefono=request.getParameter("Tel");
+        String correo=request.getParameter("Cor");
+        String usuario= request.getParameter("Usu");
+        String contraseña=request.getParameter("Con");
+        
+        usu.setNombre(nombre);
+        usu.setApellidoPaterno(apellidoPaterno);
+        usu.setApellidoMaterno(apellidoMaterno);
+        usu.setCorreo(correo);
+        usu.setTelefono(telefono);
+        usu.setUsuario(usuario);
+        usu.setContraseña(contraseña);
+        
+        PrintWriter out = response.getWriter();
+
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Registro</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>"+cone.Insert(usuario, contraseña, correo, nombre, apellidoPaterno, apellidoMaterno, telefono, Rol)+"</h1>");
+            out.println("<a href=\"/PracticaBD/index.html\"> Volver</a><br>");
+            out.println("</body>");
+            out.println("</html>");
+        
     }
 
     /**
