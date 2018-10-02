@@ -80,7 +80,7 @@ public class Conexion {
             con=DriverManager.getConnection(url, User, Pass);
             sta=con.createStatement();
             
-            res=sta.executeQuery("insert into Usuario values('10','"+Usu+"','"+Contra+"','"+Cor+"','"+Nom+"','"+Ap+"','"+Am+"','"+tel+"','"+idrol+"');");
+            sta.executeUpdate("insert into Usuario values('10','"+Usu+"','"+Contra+"','"+Cor+"','"+Nom+"','"+Ap+"','"+Am+"','"+tel+"','"+idrol+"');");
             ok="Usuario Dado de alta";
         }
         
